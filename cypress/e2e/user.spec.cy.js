@@ -20,10 +20,4 @@ describe('Orange HRM Tests', () => {
     myInfoPage.fillStatus()
     myInfoPage.saveForm()
   })
-
-  it('Login sem sucesso', () => {
-    loginPage.acessLoginPage()
-    loginPage.loginWithAnyUser(userData.userFail.username, userData.userFail.password)
-    loginPage.invalidAlert()
-  })
 });

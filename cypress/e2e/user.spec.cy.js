@@ -1,25 +1,29 @@
 import userData from '../fixtures/user-data.json'
 import LoginPage from '../pages/loginPage.js'
-import DashboardPage from '../pages/darshboardPage.js'
+import DashboardPage from '../pages/dashboardPage.js'
 import MenuPage from '../pages/menuPage.js'
+import MyInfoPage from '../pages/myInfoPage.js'
 
 const loginPage = new LoginPage()
 const dashboardPage = new DashboardPage()
 const menuPage = new MenuPage()
+const myInfoPage = new MyInfoPage()
 
 describe('Orange HRM Tests', () => {
-  it.only('User info update - Sucess', () => {
+  it('User info update - Sucess', () => {
     loginPage.acessLoginPage()
-    loginPage.loginWithUser(userData.userSucess.username, userData.userSucess.password)
+    loginPage.loginWithAnyUser(userData.userSucess.username, userData.userSucess.password)
     dashboardPage.checkDashBoardPage()
     menuPage.acessMyInfo()
+    myInfoPage.fillPersonalDetails('First Name', 'Last Name')
+    myInfoPage.fillEmployeesDetails('EmployeeID', 'OtherId', '12345', '2026-12-01', )
+    myInfoPage.fillStatus()
+    myInfoPage.saveForm()
   })
 
   it('Login sem sucesso', () => {
-    cy.visit('auth/login')
-    cy.get(selectorList.usernameField).type(userData.userFail.username)
-    cy.get(selectorList.passwordField).type(userData.userFail.password)
-    cy.get(selectorList.loginButton).click()
-    cy.get(selectorList.wrongCredentialAlert)
+    loginPage.acessLoginPage()
+    loginPage.loginWithAnyUser(userData.userFail.username, userData.userFail.password)
+    loginPage.invalidAlert()
   })
 });
